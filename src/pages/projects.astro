@@ -1,0 +1,141 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+// ─────────────────────────────────────────────────────────────
+// Add projects here. Leave the array empty to show the placeholder.
+// Each project can link to a blog post (writeup) and/or a GitHub repo.
+// ─────────────────────────────────────────────────────────────
+const projects = [
+	// Example — uncomment and edit when you have a real project:
+	// {
+	// 	title: 'ServiceNow PDI: Asset Request App',
+	// 	summary: 'A small scoped app with a custom table, Business Rule, Script Include via GlideAjax, and ACLs.',
+	// 	tags: ['ServiceNow', 'Scoped App', 'JavaScript'],
+	// 	writeup: '/blog/asset-request-app/',
+	// 	repo: 'https://github.com/alexleowsg/ServiceNow-PDI',
+	// 	status: 'In progress',
+	// },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Projects | ${SITE_TITLE}`} description="Hands-on projects: ServiceNow, CMDB, homelab and cloud." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Projects</h1>
+			<p class="intro">
+				Hands-on work from my ServiceNow developer instance and homelab. Each project links to a
+				full writeup of what I built, what broke, and what I learned.
+			</p>
+
+			{projects.length === 0 ? (
+				<p class="placeholder">
+					Projects will be added here as I turn selected lab work into proper writeups.
+					In the meantime, see the <a href="/blog/">blog</a>.
+				</p>
+			) : (
+				<ul class="project-list">
+					{projects.map((p) => (
+						<li class="project">
+							<div class="project-head">
+								<h2>{p.title}</h2>
+								{p.status && <span class="status">{p.status}</span>}
+							</div>
+							<p>{p.summary}</p>
+							{p.tags && (
+								<ul class="tags">
+									{p.tags.map((t) => <li>{t}</li>)}
+								</ul>
+							)}
+							<p class="links">
+								{p.writeup && <a href={p.writeup}>Read the writeup →</a>}
+								{p.repo && <a href={p.repo} target="_blank" rel="noopener noreferrer">View on GitHub →</a>}
+							</p>
+						</li>
+					))}
+				</ul>
+			)}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 3em 1em;
+	}
+	.intro {
+		color: rgb(var(--gray));
+	}
+	.placeholder {
+		margin-top: 2em;
+		padding: 1.25em 1.5em;
+		border-left: 4px solid var(--accent);
+		background: rgb(var(--gray-light));
+		border-radius: 4px;
+	}
+	.project-list {
+		list-style: none;
+		padding: 0;
+		margin: 2em 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5em;
+	}
+	.project {
+		padding: 1.25em 1.5em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		box-shadow: var(--box-shadow);
+		background: white;
+	}
+	.project-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1em;
+		flex-wrap: wrap;
+	}
+	.project h2 {
+		margin: 0;
+		font-size: 1.4em;
+	}
+	.status {
+		font-size: 0.8em;
+		color: rgb(var(--gray));
+		border: 1px solid rgb(var(--gray));
+		border-radius: 999px;
+		padding: 0.1em 0.7em;
+		white-space: nowrap;
+	}
+	.tags {
+		list-style: none;
+		padding: 0;
+		margin: 0.5em 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+	}
+	.tags li {
+		font-size: 0.8em;
+		background: rgb(var(--gray-light));
+		padding: 0.15em 0.6em;
+		border-radius: 4px;
+	}
+	.links {
+		display: flex;
+		gap: 1.5em;
+		flex-wrap: wrap;
+		margin-bottom: 0;
+	}
+</style>

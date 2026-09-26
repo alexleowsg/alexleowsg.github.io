@@ -1,0 +1,229 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+// ─────────────────────────────────────────────────────────────
+// All content lives in these objects. Edit here; the page renders itself.
+// Keep it public-safe: no phone, address, client/site names or infra details.
+// ─────────────────────────────────────────────────────────────
+
+const headline = 'IT Operations Engineer → ServiceNow CMDB / ITSM';
+
+const summary =
+	'Site engineer working on CMDB governance, CSDM data modelling and ITSM operations in a 24/7 environment. ' +
+	'Moving into a ServiceNow CMDB / ITSM administration role, backed by hands-on platform practice and ServiceNow, ITIL and AWS certifications.';
+
+const certifications = [
+	{ group: 'ServiceNow', items: ['Certified System Administrator (CSA)', 'Certified Implementation Specialist – Data Foundations (CIS-DF)'] },
+	{ group: 'ITIL 4', items: ['Foundation', 'Create, Deliver & Support (CDS)'] },
+	{ group: 'AWS', items: ['Cloud Practitioner (CLF-C02)', 'Solutions Architect – Associate (SAA-C03)', 'AI Practitioner (AIF-C01)'] },
+];
+
+const skills = [
+	{ group: 'ServiceNow', items: ['CMDB', 'CSDM', 'ITSM (Incident / Problem / Change)', 'Data governance'] },
+	{ group: 'Operations', items: ['Configuration management', 'Multi-site support', '24/7 operations'] },
+	{ group: 'Technical', items: ['Networking', 'AWS', 'Docker ', 'Git & GitHub Actions'] },
+];
+
+// TODO: review wording before publishing. Keep descriptions at the level of
+// "what kind of work", never client names, site names or system specifics.
+const experience = [
+	{
+		role: 'Site Engineer',
+		org: 'DXC Technology Singapore',
+		points: [
+			'CMDB governance and data quality across multiple sites',
+			'CSDM-aligned data modelling and configuration management',
+			'ITSM operations in a round-the-clock support environment',
+		],
+	},
+	{
+		role: 'Desktop Engineer',
+		org: 'PCCW Solutions',
+		points: ['Support endpoint operations, software deployment, user access, hardware lifecycle activities, and operational troubleshooting within a large enterprise environment.'],
+	},
+	{
+		role: 'Network Engineer',
+		org: 'Inventio Pte Ltd ',
+		points: ['Supported network operations, basic configuration, and troubleshooting.'],
+	},
+	{
+		role: 'Consultant',
+		org: 'NCS Group',
+		points: [' Supported application operations, user liaison, and production issue stabilization.'],
+	},
+];
+
+const education = [
+	{ course: 'E-commerce', school: 'National University of Singapore' },
+	{ course: 'Networking', school: 'Singapore Polytechnic' },
+];
+
+// Set to a file path (e.g. '/resume.pdf', placed in /public) when you have one.
+const pdfUrl = null;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Resume | ${SITE_TITLE}`} description="Resume: ServiceNow CMDB / ITSM, IT operations, certifications." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="resume-head">
+				<h1>Alex Leow</h1>
+				<p class="headline">{headline}</p>
+				<p class="contact">
+					<a href="https://www.linkedin.com/in/alex-leow-30251730/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+					<span aria-hidden="true">·</span>
+					<a href="https://github.com/alexleowsg" target="_blank" rel="noopener noreferrer">GitHub</a>
+					{pdfUrl && (
+						<>
+							<span aria-hidden="true">·</span>
+							<a href={pdfUrl} download>Download PDF</a>
+						</>
+					)}
+				</p>
+			</header>
+
+			<section>
+				<h2>Summary</h2>
+				<p>{summary}</p>
+			</section>
+
+			<section>
+				<h2>Certifications</h2>
+				<dl class="grouped">
+					{certifications.map((c) => (
+						<div>
+							<dt>{c.group}</dt>
+							<dd>
+								<ul>{c.items.map((i) => <li>{i}</li>)}</ul>
+							</dd>
+						</div>
+					))}
+				</dl>
+			</section>
+
+			<section>
+				<h2>Experience</h2>
+				{experience.map((e) => (
+					<article class="job">
+						<h3>
+							{e.role} <span class="org">· {e.org}</span>
+						</h3>
+						<ul>{e.points.map((pt) => <li>{pt}</li>)}</ul>
+					</article>
+				))}
+			</section>
+
+			<section>
+				<h2>Skills</h2>
+				<dl class="grouped">
+					{skills.map((s) => (
+						<div>
+							<dt>{s.group}</dt>
+							<dd>
+								<ul class="chips">{s.items.map((i) => <li>{i}</li>)}</ul>
+							</dd>
+						</div>
+					))}
+				</dl>
+			</section>
+
+			<section>
+				<h2>Education</h2>
+				<ul class="plain">
+					{education.map((ed) => (
+						<li><strong>{ed.school}</strong> · {ed.course}</li>
+					))}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 3em 1em;
+	}
+	.resume-head h1 {
+		margin-bottom: 0.1em;
+	}
+	.headline {
+		font-size: 1.2em;
+		color: rgb(var(--gray-dark));
+		margin: 0 0 0.5em;
+	}
+	.contact {
+		display: flex;
+		gap: 0.6em;
+		flex-wrap: wrap;
+		color: rgb(var(--gray));
+	}
+	section {
+		margin-top: 2.5em;
+	}
+	h2 {
+		font-size: 1.4em;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		padding-bottom: 0.25em;
+	}
+	.grouped div {
+		display: grid;
+		grid-template-columns: 8em 1fr;
+		gap: 1em;
+		margin-bottom: 0.75em;
+	}
+	.grouped dt {
+		font-weight: 700;
+	}
+	.grouped dd {
+		margin: 0;
+	}
+	.grouped ul {
+		margin: 0;
+		padding-left: 1.1em;
+	}
+	.chips {
+		list-style: none;
+		padding: 0 !important;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+	}
+	.chips li {
+		font-size: 0.85em;
+		background: rgb(var(--gray-light));
+		padding: 0.15em 0.6em;
+		border-radius: 4px;
+	}
+	.job {
+		margin-bottom: 1.25em;
+	}
+	.job h3 {
+		font-size: 1.1em;
+		margin-bottom: 0.3em;
+	}
+	.org {
+		font-weight: 400;
+		color: rgb(var(--gray));
+	}
+	.plain {
+		list-style: none;
+		padding: 0;
+	}
+	@media (max-width: 560px) {
+		.grouped div {
+			grid-template-columns: 1fr;
+			gap: 0.25em;
+		}
+	}
+</style>
